@@ -36,7 +36,7 @@ namespace LogixUtils
         [AutoRegisterConfigKey]
         public static readonly ModConfigurationKey<bool> AddInputNodes = new ModConfigurationKey<bool>("addInputNodes", "Add unused input nodes to input node list", () => true);
         [AutoRegisterConfigKey]
-        public static readonly ModConfigurationKey<bool> AddOtherInputNodes = new ModConfigurationKey<bool>("addOtherInputNodes", "Also add other input nodes", () => true);
+        public static readonly ModConfigurationKey<bool> AddOtherInputNodes = new ModConfigurationKey<bool>("addOtherInputNodes", "Also add other input nodes (such as Slot and User)", () => true);
 
         //
         [AutoRegisterConfigKey]
@@ -53,6 +53,7 @@ namespace LogixUtils
             { ExtractRefOfAny, new ExtractRef() },
             { ClampNodeTextures, new ClampNodes() },
             { AddInputNodes, new InputNodes() },
+            { AddOtherInputNodes, new OtherInputNodes() },
             { RepairCrashedNodesContext, new TryRepairNodes() }
         };
 

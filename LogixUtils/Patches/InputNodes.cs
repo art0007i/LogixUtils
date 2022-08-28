@@ -10,21 +10,13 @@ namespace LogixUtils
 {
     class InputNodes : ToggleablePatch
     { // Fix existing input nodes not being defined as input nodes
-
         public override void Initialize(Harmony harmony, LogixUtils mod, ModConfiguration config) {
-            addOrRemoveInputnodes(unusedInputs, config.GetValue<bool>(LogixUtils.AddInputNodes));
-            addOrRemoveInputnodes(newUtilInputs, config.GetValue<bool>(LogixUtils.AddOtherInputNodes));
+            addOrRemoveInputnodes(unusedInputs, config.GetValue(LogixUtils.AddInputNodes));
         }
         public override void OnThisConfigurationChanged(ConfigurationChangedEvent configurationChangedEvent) {
             if (configurationChangedEvent.Key == LogixUtils.AddInputNodes)
             {
                 addOrRemoveInputnodes(unusedInputs, configurationChangedEvent.Config.GetValue<bool>(LogixUtils.AddInputNodes));
-                return;
-            }
-
-            if (configurationChangedEvent.Key == LogixUtils.AddOtherInputNodes)
-            {
-                addOrRemoveInputnodes(newUtilInputs, configurationChangedEvent.Config.GetValue<bool>(LogixUtils.AddOtherInputNodes));
                 return;
             }
         }
@@ -52,11 +44,7 @@ namespace LogixUtils
               { typeof(IAssetProvider<AudioClip>), typeof(FrooxEngine.LogiX.Audio.AudioClipInput) },
               { typeof(TimeSpan), typeof(FrooxEngine.LogiX.Input.TimeSpanInput) },
               { typeof(bobool3ol), typeof(FrooxEngine.LogiX.Input.Bobool3ol) }, // :P
-            };
-        private static Dictionary<Type, Type> newUtilInputs = new Dictionary<Type, Type>() {
               { typeof(DateTime), typeof(FrooxEngine.LogiX.Input.UtcNowNode) },
-              { typeof(User), typeof(FrooxEngine.LogiX.WorldModel.LocalUser) },
-              { typeof(Slot), typeof(FrooxEngine.LogiX.WorldModel.LocalUserSpace) }
             };
     }
 }
