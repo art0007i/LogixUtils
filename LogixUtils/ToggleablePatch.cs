@@ -1,4 +1,4 @@
-﻿using NeosModLoader;
+﻿using ResoniteModLoader;
 using HarmonyLib;
 
 namespace LogixUtils

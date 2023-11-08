@@ -1,5 +1,5 @@
 ﻿using FrooxEngine;
-using FrooxEngine.LogiX;
+using FrooxEngine.ProtoFlux;
 using HarmonyLib;
 using System.Reflection;
 
@@ -9,27 +9,27 @@ namespace LogixUtils
     {
         public override void Patch(Harmony harmony, LogixUtils mod)
         {
-            var positionSpawnedNodeMethod = typeof(LogixTip).GetMethod("PositionSpawnedNode", BindingFlags.NonPublic | BindingFlags.Instance);
+            var positionSpawnedNodeMethod = typeof(ProtoFluxTool).GetMethod("GenerateSlotNode", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            var vrNodeRotationPatchMethod = typeof(VrSpawnFix).GetMethod("VrNodeRotationPatch");
+            var vrNodeRotationPatchMethod = typeof(VrSpawnFix).GetMethod(nameof(VrNodeRotationPatch));
 
             harmony.Patch(positionSpawnedNodeMethod, postfix: new HarmonyMethod(vrNodeRotationPatchMethod));
         }
 
         public override void Unpatch(Harmony harmony, LogixUtils mod)
         {
-            var positionSpawnedNodeMethod = typeof(LogixTip).GetMethod("PositionSpawnedNode", BindingFlags.NonPublic | BindingFlags.Instance);
+            var positionSpawnedNodeMethod = typeof(ProtoFluxTool).GetMethod("GenerateSlotNode", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            var vrNodeRotationPatchMethod = typeof(VrSpawnFix).GetMethod("VrNodeRotationPatch");
+            var vrNodeRotationPatchMethod = typeof(VrSpawnFix).GetMethod(nameof(VrNodeRotationPatch));
 
             harmony.Unpatch(positionSpawnedNodeMethod, vrNodeRotationPatchMethod);
         }
 
-        public static void VrNodeRotationPatch(LogixTip __instance, Slot node)
+        public static void VrNodeRotationPatch(ProtoFluxTool __instance, Slot __result)
         {
             if (__instance.InputInterface.VR_Active)
             {
-                node.Up = __instance.Slot.ActiveUserRoot.Slot.Up;
+                __result.Up = __instance.Slot.ActiveUserRoot.Slot.Up;
             }
         }
     }
